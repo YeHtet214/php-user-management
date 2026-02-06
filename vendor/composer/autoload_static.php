@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit4acc7b5b19695d5b9ae0c04fa73b7c84
 {
     public static $files = array (
+        '9b38cf48e83f5d8f60375221cd213eee' => __DIR__ . '/..' . '/phpstan/phpstan/bootstrap.php',
         'fc8bb7cba02a11ab8591dc6d6548e20a' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
