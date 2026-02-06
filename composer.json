@@ -1,0 +1,19 @@
+{
+    "name": "php/usermanagement",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Ye Htet",
+            "email": "yhtet1934@gmail.com"
+        }
+    ],
+    "require": {}
+}
