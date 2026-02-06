@@ -1,22 +1,24 @@
 {
-    "name": "php/usermanagement",
-    "autoload": {
-        "psr-4": {
-            "Core\\": "core/",
-            "App\\": "app/"
-        },
-        "files": [
-            "app/helpers.php"
-        ]
-    },
-    "authors": [
-        {
-            "name": "Ye Htet",
-            "email": "yhtet1934@gmail.com"
-        }
-    ],
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^4.0",
-        "phpstan/phpstan": "^2.1"
-    }
+	"name": "php/usermanagement",
+	"description": "A PHP user management system",
+	"license": "proprietary",
+	"autoload": {
+		"psr-4": {
+			"Core\\": "core/",
+			"App\\": "app/"
+		},
+		"files": [
+			"app/helpers.php"
+		]
+	},
+	"authors": [
+		{
+			"name": "Ye Htet",
+			"email": "yhtet1934@gmail.com"
+		}
+	],
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^4.0",
+		"phpstan/phpstan": "^2.1"
+	}
 }
