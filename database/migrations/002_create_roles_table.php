@@ -8,5 +8,5 @@ return [
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ",
-    'down' => "DROP TABLE IF EXISTS users"
+    'down' => "DROP TABLE IF EXISTS roles"
 ];
