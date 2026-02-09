@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+  ob_start();
+?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Mangement</title>
-</head>
+<h1>Users</h1>
+<ul>
+  <li>User 1</li>
+  <li>User 2</li>
+  <li>User 3</li>
+</ul>
 
-<body>
-  <h1>See all users</h1>
-  <ul>
-    <li>
-test list
-    </li>
-  </ul>
-</body>
+<?php 
+  $content = ob_get_clean();
 
-</html>
+  include __DIR__ . "/../../../app/views/layout/main.php";
+?>
