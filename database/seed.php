@@ -5,10 +5,6 @@ use Core\Database;
 
 $pdo = Database::connect();
 
-// $userMigration = glob(__DIR__ . '/migrations/001_create_users_table.php');
-// $roleMigration = glob(__DIR__ . '/migrations/002_create_roles_table.php');
-// sort($migrations);
-
 try {
   // Check if 'admin' role already exists
   $stmt = $pdo->prepare("SELECT COUNT(*) FROM roles WHERE name = ?");
@@ -19,8 +15,52 @@ try {
       $pdo->exec("INSERT INTO roles (name) VALUES ('admin')");
   }
 
-  $pdo->exec("INSERT INTO users (name, email, password, role_id) VALUES ('Jhon', 'example@abc.com', 'user123', 1)");
+  // Check if user already exists
+  $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+  $stmt->execute(['example@abc.com']);
+  $count = $stmt->fetchColumn();
+  if ($count == 0) {
+      $pdo->exec("INSERT INTO users (name, email, password, role_id) VALUES ('Jhon', 'example@abc.com', 'user123', 1)");
+  }
 } catch (PDOException $e) {
   echo "" . $e->getMessage() . " Seeding error!";
 }
 
+// Adding seeding for features
+$features = ['User', 'Product', 'Report', 'Sale', 'Inventory'];
+foreach ($features as $feature) {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM features WHERE name = ?");
+    $stmt->execute([$feature]);
+    $count = $stmt->fetchColumn();
+
+    if ($count == 0) {
+        $pdo->prepare("INSERT INTO features (name) VALUES (?)")->execute([$feature]);
+    }
+}
+
+// Adding seeding for permissions
+$features = $pdo->query("SELECT id, name FROM features")->fetchAll(PDO::FETCH_ASSOC);
+$permissions = ['View', 'Create', 'Update', 'Delete'];
+
+foreach ($features as $feature) {
+    foreach ($permissions as $permission) {
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM permissions WHERE name = ? AND feature_id = ?");
+        $stmt->execute([$permission, $feature['id']]);
+        $count = $stmt->fetchColumn();
+
+        if ($count == 0) {
+            try {
+                $pdo->prepare("INSERT INTO permissions (name, feature_id) VALUES (?, ?)")->execute([$permission, $feature['id']]);
+            } catch (PDOException $e) {
+                // If we hit a unique constraint on feature_id, it means this schema only allows one permission per feature
+                // We can log it or just skip if we already have a permission for this feature
+                if ($e->getCode() == '23000') {
+                    continue;
+                }
+                throw $e;
+            }
+        }
+    }
+}
+
+echo "Seeding Complete";
