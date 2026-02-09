@@ -1,0 +1,5 @@
+# SQLite database files
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal

@@ -5,10 +5,12 @@ return [
         CREATE TABLE IF NOT EXISTS role_permissions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             role_id INTEGER,
+            permission_id INTEGER,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-            FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+            FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+            FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
         )
     ",
-    'down' => "DROP TABLE IF EXISTS users"
+    'down' => "DROP TABLE IF EXISTS role_permissions"
 ];
