@@ -24,6 +24,7 @@ class Database
 
       self::$pdo->exec('PRAGMA foreign_keys = ON;');
       self::$pdo->exec('PRAGMA journal_mode = WAL;');
+      self::$pdo->exec('PRAGMA busy_timeout = 5000;');
 
       return self::$pdo;
     } catch (PDOException $e) {

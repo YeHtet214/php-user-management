@@ -40,7 +40,10 @@ foreach ($features as $feature) {
 
 // Adding seeding for permissions
 $features = $pdo->query("SELECT id, name FROM features")->fetchAll(PDO::FETCH_ASSOC);
-$permissions = ['View', 'Create', 'Update', 'Delete'];
+$permissions = ['view', 'create', 'update', 'delete'];
+
+print_r($features);
+print_r($permissions);
 
 foreach ($features as $feature) {
     foreach ($permissions as $permission) {
@@ -48,15 +51,22 @@ foreach ($features as $feature) {
         $stmt->execute([$permission, $feature['id']]);
         $count = $stmt->fetchColumn();
 
+        echo " start";
+        echo " count: " . $count;
+        echo $permission;
+
         if ($count == 0) {
+          print_r("No feature permission yet ");
+          print_r($feature);
+          echo "<br>";
             try {
-                $pdo->prepare("INSERT INTO permissions (name, feature_id) VALUES (?, ?)")->execute([$permission, $feature['id']]);
+                $pdo->prepare("INSERT OR IGNORE INTO permissions (name, feature_id) VALUES (?, ?)")->execute([$permission, $feature['id']]);
             } catch (PDOException $e) {
                 // If we hit a unique constraint on feature_id, it means this schema only allows one permission per feature
                 // We can log it or just skip if we already have a permission for this feature
-                if ($e->getCode() == '23000') {
-                    continue;
-                }
+                // if ($e->getCode() == '23000') {
+                //     continue;
+                // }
                 throw $e;
             }
         }

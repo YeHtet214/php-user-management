@@ -10,10 +10,6 @@ abstract class Model
   public function __construct()
   {
     $this->db = Database::connect();
-
-    // for testing purpose
-    // Create role table to be able to test user creation
-    $this->db->exec("INSERT OR IGNORE INTO roles (name) VALUES ('admin')");
   }
 
   public function all()
@@ -23,7 +19,7 @@ abstract class Model
     return $stmt->fetchAll();
   }
 
-  public function find($id)
+  public function findById($id)
   {
     $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = :id");
     $stmt->execute(['id' => $id]);
@@ -41,11 +37,6 @@ abstract class Model
     $sql = "INSERT OR IGNORE INTO {$this->table} ($columns) VALUES ($placeholders)";
 
     $stmt = $this->db->prepare($sql);
-    
-    echo "<br>";
-    echo "<br>";
-
-    echo "prepared: " . $stmt->queryString;
 
     return $stmt->execute($data);
   }
