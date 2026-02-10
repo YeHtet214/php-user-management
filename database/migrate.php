@@ -11,7 +11,11 @@ sort($migrations);
 foreach ($migrations as $migration) {
     $sql = require $migration;
     echo "Running: " . basename($migration) . "\n";
-    $pdo->exec($sql['up']);
+    if (is_callable($sql['up'])) {
+        $sql['up']($pdo);
+    } else {
+        $pdo->exec($sql['up']);
+    }
     echo "✓ Complete\n";
 }
 

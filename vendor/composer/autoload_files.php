@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     '9b38cf48e83f5d8f60375221cd213eee' => $vendorDir . '/phpstan/phpstan/bootstrap.php',
     'fc8bb7cba02a11ab8591dc6d6548e20a' => $baseDir . '/app/helpers.php',
+    '8a1541337b9ce31f596df88d53a4c511' => $baseDir . '/app/utils.php',
 );

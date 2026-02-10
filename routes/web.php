@@ -20,3 +20,9 @@ $router->post('/users/delete', [UserController::class, 'destroy']);
 $router->get('/roles', [RoleController::class, 'index']);
 
 $router->get('/roles/create', [RoleController::class, 'create']);
+
+$router->post('/roles/create', [RoleController::class, 'create']);
+
+$router->post('/roles/update', [RoleController::class, 'update']);
+
+$router->post('/roles/delete', [RoleController::class, 'destory']);

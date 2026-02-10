@@ -6,7 +6,7 @@ use Core\Model;
 
 class User extends Model
 {
-  protected $table = "admin_users";
+  protected $table = "users";
 
   public function findbyEmail($email)
   {
