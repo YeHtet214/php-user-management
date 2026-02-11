@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-<b>-></b><a href="/roles">Roles</a>
+<a href="/roles">Roles</a>
 
 <h2>Create New Role</h2>
 
@@ -8,13 +8,13 @@
   <label for="name">Role Name</label>
   <input type="text" name="name">
 
-  <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+  <div>
     <h3>Features</h3>
     <h3>Permissions</h3>
   </div>
 
   <div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; row-gap: 20px;">
+    <div>
       <?php foreach ($features as $feature): ?>
         <p>
           <?= htmlspecialchars($feature['name']) ?>
