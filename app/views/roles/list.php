@@ -1,29 +1,37 @@
 <?php ob_start() ?>
 
-<a href="/roles/create">Create Role</a>
+<section class="users-section">
+  <div class="users-header">
+    <h2>Roles</h2>
+    <a href="/roles/create" class="action-navigate-link">Create Role</a>
+  </div>
 
-<table class="roles-table">
-  <thead>
-    <tr>
-      <th>Role</th>
-      <th>Actions</th> </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($roles as $role): ?>
-      <tr class="roles-row">
-        <td><?= htmlspecialchars($role['name']) ?></td>
-        <td>
-          <a href="/roles?edit_id=<?= $role['id'] ?>" class="btn-edit">Edit</a>
-          
-          <form action="/roles/delete" method="POST" onsubmit="return confirm('Are you sure?');">
-            <input type="hidden" name="id" value="<?= $role['id'] ?>">
-            <button type="submit" class="btn-delete">Delete</button>
-          </form>
-        </td>
-      </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+  <div class="users-table-wrap">
+    <table class="roles-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($roles as $role): ?>
+          <tr class="roles-row">
+            <td><?= htmlspecialchars($role['name']) ?></td>
+            <td>
+              <a href="/roles?edit_id=<?= $role['id'] ?>" class="btn-edit">Edit</a>
+
+              <form action="/roles/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                <input type="hidden" name="id" value="<?= $role['id'] ?>">
+                <button type="submit" class="btn-delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</section>
 
 <?php if (isset($editRole)): ?>
   <div class="modal-overlay">

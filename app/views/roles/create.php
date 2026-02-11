@@ -1,50 +1,71 @@
-<?php ob_start(); ?>
+<?php
+ob_start();
+$errors = $_SESSION['errors'] ?? [];
 
-<a href="/roles">Roles</a>
+// Clear the session immediately
+unset($_SESSION['errors']);
+?>
 
-<h2>Create New Role</h2>
-
-<form action="/roles/create" method="POST">
-  <label for="name">Role Name</label>
-  <input type="text" name="name">
-
-  <div>
-    <h3>Features</h3>
-    <h3>Permissions</h3>
+<section class="users-section">
+  <div class="users-header">
+    <h2>Create New Role</h2>
+    <a href="/roles" class="action-navigate-link">Roles</a>
   </div>
 
-  <div>
-    <div>
-      <?php foreach ($features as $feature): ?>
-        <p>
-          <?= htmlspecialchars($feature['name']) ?>
-        </p>
+  <form action="/roles/create" method="POST">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" name="name" class="<?= isset($errors['name']) ? 'error-border' : '' ?>">
 
-        <div>
-          <label>
-            <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="View"> View
-          </label>
-
-          <label>
-            <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Create"> Create
-          </label>
-
-          <label>
-            <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Update"> Update
-          </label>
-
-          <label>
-            <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Delete"> Delete
-          </label>
+      <?php if (isset($errors['name'])): ?>
+        <div class="error-text">
+          <?= $errors['name'] ?>
         </div>
-      <?php endforeach; ?>
+      <?php endif; ?>
     </div>
 
-  </div>
+    <div class="permission-head">
+      <span>Feature</span>
+      <span>Permissions</span>
+    </div>
 
-  <br> <br>
-  <button type="submit">Submit</button>
-</form>
+    <div class="feature-grid">
+      <?php foreach ($features as $feature): ?>
+        <div class="permission-row">
+          <strong><?= htmlspecialchars($feature['name']) ?></strong>
+
+          <div class="permission-actions">
+            <label class="perm-label">
+              <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="View"> View
+            </label>
+
+            <label class="perm-label">
+              <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Create"> Create
+            </label>
+
+            <label class="perm-label">
+              <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Update"> Update
+            </label>
+
+            <label class="perm-label">
+              <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Delete"> Delete
+            </label>
+          </div>
+        </div>
+      <?php endforeach; ?>
+
+      <?php if (isset($errors['permissions'])): ?>
+        <div class="error-text">
+          <?= $errors['permissions'] ?>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <div class="actions">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</section>
 
 <?php
 $roleConent = ob_get_clean();

@@ -37,8 +37,8 @@ class RoleController
     // POST request check the validation and DB actions
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-      $name = trim(filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING));
-      $permissions = $_POST["permissions"] ?? [];
+      $name = trim($_POST["name"]);
+      $permissions = $_POST["permissions"];
 
       if (empty($name)) {
         $errors["name"] = "Role name is required";
@@ -48,11 +48,22 @@ class RoleController
         $errors["permissions"] = "At least one permission is required";
       }
 
-      if (empty($errors)) {
+      if (!empty($errors)) {
+        $_SESSION['errors'] = $errors;
+        header('Location: /roles/create');
+        exit();
+      }
+
+      try {
         $this->roleModel->createRoleWithPermissions($name, $permissions);
 
         header("Location: /roles");
         exit;
+      } catch (\PDOException $e) {
+        $_SESSION['errors'] = ["Database Error: " . $e->getMessage()];
+
+        header('Location: /roles/create');
+        exit();
       }
     }
 
