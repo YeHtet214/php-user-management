@@ -8,11 +8,11 @@ $pdo = Database::connect();
 try {
   // Check if 'admin' role already exists
   $stmt = $pdo->prepare("SELECT COUNT(*) FROM roles WHERE name = ?");
-  $stmt->execute(['admin']);
+  $stmt->execute(['Admin']);
   $count = $stmt->fetchColumn();
 
   if ($count == 0) {
-      $pdo->exec("INSERT INTO roles (name) VALUES ('admin')");
+      $pdo->exec("INSERT INTO roles (name) VALUES ('Admin')");
   }
 
   // Check if user already exists
@@ -62,11 +62,6 @@ foreach ($features as $feature) {
             try {
                 $pdo->prepare("INSERT OR IGNORE INTO permissions (name, feature_id) VALUES (?, ?)")->execute([$permission, $feature['id']]);
             } catch (PDOException $e) {
-                // If we hit a unique constraint on feature_id, it means this schema only allows one permission per feature
-                // We can log it or just skip if we already have a permission for this feature
-                // if ($e->getCode() == '23000') {
-                //     continue;
-                // }
                 throw $e;
             }
         }
