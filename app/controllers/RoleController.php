@@ -34,9 +34,6 @@ class RoleController
   public function create()
   {
     $errors = [];
-
-    var_dump($_POST);
-
     // POST request check the validation and DB actions
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 

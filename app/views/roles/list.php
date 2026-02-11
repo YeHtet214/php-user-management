@@ -15,7 +15,7 @@
         <td>
           <a href="/roles?edit_id=<?= $role['id'] ?>" class="btn-edit">Edit</a>
           
-          <form action="/roles/delete" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+          <form action="/roles/delete" method="POST" onsubmit="return confirm('Are you sure?');">
             <input type="hidden" name="id" value="<?= $role['id'] ?>">
             <button type="submit" class="btn-delete">Delete</button>
           </form>
@@ -27,7 +27,7 @@
 
 <?php if (isset($editRole)): ?>
   <div class="modal-overlay">
-    <div class="modal-content" style="width: 80%; max-width: 800px;"> <h3>Edit Role: <?= htmlspecialchars($editRole['name']) ?></h3>
+    <div class="modal-content"> <h3>Edit Role: <?= htmlspecialchars($editRole['name']) ?></h3>
 
       <form action="/roles/update" method="POST">
         <input type="hidden" name="id" value="<?= $editRole['id'] ?>">
@@ -37,6 +37,10 @@
         <br><br>
 
         <h3>Permissions</h3>
+        <div class="permission-head">
+          <span>Feature</span>
+          <span>Permissions</span>
+        </div>
         <div class="feature-grid">
           <?php foreach ($features as $feature): ?>
             <?php 
@@ -44,34 +48,35 @@
                 $existing = $currentPermissions[$feature['id']] ?? [];
             ?>
             
-            <div class="permission-group">
+            <div class="permission-row">
               <strong><?= htmlspecialchars($feature['name']) ?></strong>
-              <br>
-              
-              <label class="perm-label">
-                <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="View"
-                  <?= in_array('view', $existing) ? 'checked' : '' ?>> View
-              </label>
 
-              <label class="perm-label">
-                <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Create"
-                  <?= in_array('create', $existing) ? 'checked' : '' ?>> Create
-              </label>
+              <div class="permission-actions">
+                <label class="perm-label">
+                  <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="View"
+                    <?= in_array('view', $existing) ? 'checked' : '' ?>> View
+                </label>
 
-              <label class="perm-label">
-                <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Update"
-                  <?= in_array('update', $existing) ? 'checked' : '' ?>> Update
-              </label>
+                <label class="perm-label">
+                  <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Create"
+                    <?= in_array('create', $existing) ? 'checked' : '' ?>> Create
+                </label>
 
-              <label class="perm-label">
-                <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Delete"
-                  <?= in_array('delete', $existing) ? 'checked' : '' ?>> Delete
-              </label>
+                <label class="perm-label">
+                  <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Update"
+                    <?= in_array('update', $existing) ? 'checked' : '' ?>> Update
+                </label>
+
+                <label class="perm-label">
+                  <input type="checkbox" name="permissions[<?= $feature['id'] ?>][]" value="Delete"
+                    <?= in_array('delete', $existing) ? 'checked' : '' ?>> Delete
+                </label>
+              </div>
             </div>
           <?php endforeach; ?>
         </div>
 
-        <div class="actions" style="margin-top: 20px;">
+        <div class="actions">
           <button type="submit">Update Role</button>
           <a href="/roles" class="cancel-btn">Cancel</a>
         </div>
