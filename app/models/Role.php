@@ -123,7 +123,7 @@ class Role extends Model
 
   public function getAllFeatures()
   {
-    $features = $this->db->query("SELECT id, name FROM features")->fetchAll();
+    $features = $this->db->query(query: "SELECT id, name FROM features")->fetchAll();
 
     return $features;
   }

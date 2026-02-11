@@ -1,10 +1,6 @@
-</php ob_start() ?>
+<?php ob_start(); ?>
 
-<h2>Roles and Permissions</h2>
-
-<div>
-  <?php echo $roleConent; ?>
-</div>
+<?php echo $roleConent; ?>
 
 <?php
 $content = ob_get_clean();

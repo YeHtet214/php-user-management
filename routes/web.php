@@ -10,6 +10,8 @@ $router->get('/users', [UserController::class, 'index']);
 
 $router->post('/users', [UserController::class, 'store']);
 
+$router->get('/users/create', [UserController::class, 'create']);
+
 $router->post('/users/create', [UserController::class, 'create']);
 
 $router->post('/users/update', [UserController::class, 'update']); 
